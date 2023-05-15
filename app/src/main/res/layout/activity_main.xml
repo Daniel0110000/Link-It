@@ -7,24 +7,77 @@
     android:layout_height="match_parent"
     tools:context=".ui.activities.MainActivity">
 
-    <LinearLayout
-        android:id="@+id/messageBar"
+    <TextView
+        android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="none"
+        android:background="@color/gray"
+        android:fontFamily="@font/roboto_bold"
+        android:paddingLeft="15sp"
+        android:paddingTop="10sp"
+        android:paddingBottom="10sp"
+        android:text="Link It"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="662dp"
+        android:paddingLeft="17sp"
+        app:layout_constraintBottom_toTopOf="@+id/messageBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:id="@+id/msgCont"
+            android:layout_width="360sp"
+            android:layout_height="match_parent"
+            android:orientation="vertical" />
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/messageBar"
+        android:layout_width="411dp"
+        android:layout_height="51dp"
         android:orientation="horizontal"
-        android:padding="16dp"
+        android:paddingLeft="27dp"
+        android:paddingBottom="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
+
         <EditText
-            android:layout_width="match_parent"
+            android:background="@drawable/input_radius"
+            android:id="@+id/inputMsg"
+            android:layout_width="305dp"
             android:layout_height="wrap_content"
-            android:text="Type a message"
+            android:layout_marginRight="7dp"
+            android:hint="Type a message"
+            android:paddingLeft="30sp"
             android:paddingTop="15sp"
             android:paddingBottom="15sp"
-            android:paddingLeft="30sp"
             android:textColor="@color/white"
-            android:background="@color/gray"/>
+            android:textColorHint="@color/white"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btnSnd"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/blue_a"
+            android:gravity="center_horizontal"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            android:paddingLeft="10sp"
+            app:cornerRadius="50dp"
+            app:icon="@drawable/ic_send"
+            app:iconSize="34sp"
+            app:iconTint="@color/white" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

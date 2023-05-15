@@ -36,7 +36,7 @@
         app:srcCompat="@drawable/sin_t_tulo" />
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/username"
         android:layout_width="355dp"
         android:layout_height="69dp"
         android:background="#202124"
@@ -76,7 +76,7 @@
         app:layout_constraintVertical_bias="0.396" />
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/chLogin"
         android:layout_width="143sp"
         android:layout_height="49sp"
         android:scaleX="2"
@@ -94,6 +94,7 @@
 
     <Button
         android:layout_width="328dp"
+        android:id="@+id/btnLogin"
         android:layout_height="74dp"
         android:backgroundTint="#4C81FC"
         android:paddingTop="15dp"
