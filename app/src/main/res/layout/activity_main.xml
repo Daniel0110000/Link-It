@@ -45,7 +45,7 @@
         android:layout_width="411dp"
         android:layout_height="51dp"
         android:orientation="horizontal"
-        android:paddingLeft="27dp"
+        android:paddingLeft="17dp"
         android:paddingBottom="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -54,7 +54,7 @@
         <EditText
             android:background="@drawable/input_radius"
             android:id="@+id/inputMsg"
-            android:layout_width="305dp"
+            android:layout_width="319dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="7dp"
             android:hint="Type a message"
