@@ -7,31 +7,57 @@
     android:layout_height="match_parent"
     tools:context=".ui.activities.MainActivity">
 
-    <TextView
-        android:id="@+id/textView2"
+    <LinearLayout
+        android:elevation="20dp"
+        android:gravity="center_vertical"
+        android:background="@color/gray"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/gray"
-        android:fontFamily="@font/roboto_bold"
-        android:paddingLeft="15sp"
-        android:paddingTop="10sp"
-        android:paddingBottom="10sp"
-        android:text="Link It"
-        android:textColor="@color/white"
-        android:textSize="24sp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:background="@color/gray"
+            android:fontFamily="@font/roboto_bold"
+            android:letterSpacing=".1"
+            android:paddingLeft="15sp"
+            android:paddingTop="10sp"
+            android:paddingBottom="10sp"
+            android:text="Link It"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/btnMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:backgroundTint="@color/gray"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:paddingLeft="0dp"
+            android:paddingTop="0dp"
+            app:icon="@drawable/ic_menu"
+            app:iconPadding="0dp"
+            app:iconSize="43dp"
+            app:iconTint="@color/white" />
+    </LinearLayout>
 
     <ScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
-        android:layout_height="662dp"
+        android:layout_height="677dp"
         android:paddingLeft="17sp"
         app:layout_constraintBottom_toTopOf="@+id/messageBar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="1.0">
 
         <LinearLayout
             android:id="@+id/msgCont"
@@ -41,24 +67,26 @@
     </ScrollView>
 
     <LinearLayout
+        android:paddingTop="2dp"
+        android:background="@color/bg_dark"
         android:id="@+id/messageBar"
         android:layout_width="411dp"
-        android:layout_height="51dp"
+        android:layout_height="57dp"
         android:orientation="horizontal"
         android:paddingLeft="17dp"
         android:paddingBottom="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <EditText
-            android:background="@drawable/input_radius"
             android:id="@+id/inputMsg"
-            android:layout_width="319dp"
+            android:layout_width="325dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="7dp"
+            android:layout_marginRight="3dp"
+            android:background="@drawable/input_radius"
             android:hint="Type a message"
-            android:paddingLeft="30sp"
+            android:paddingLeft="20sp"
             android:paddingTop="15sp"
             android:paddingBottom="15sp"
             android:textColor="@color/white"
@@ -67,17 +95,17 @@
 
         <Button
             android:id="@+id/btnSnd"
-            android:layout_width="50dp"
+            android:layout_width="49dp"
             android:layout_height="match_parent"
             android:backgroundTint="@color/blue_a"
             android:gravity="center_horizontal"
             android:insetTop="0dp"
             android:insetRight="0dp"
             android:insetBottom="0dp"
-            android:paddingLeft="10sp"
+            android:paddingLeft="12sp"
             app:cornerRadius="50dp"
             app:icon="@drawable/ic_send"
-            app:iconSize="34sp"
+            app:iconSize="30sp"
             app:iconTint="@color/white" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,6 +21,7 @@ import com.google.gson.JsonParser
 import org.json.JSONObject
 import org.json.JSONArray
 import android.view.ViewGroup.MarginLayoutParams
+import android.widget.ScrollView
 
 class MainActivity : AppCompatActivity() {
     object SocketHandler {
@@ -63,40 +64,55 @@ class MainActivity : AppCompatActivity() {
         userData.put("user", username)
         mSocket.emit("getUser",userData)
 
-        // args[0] is the data from the server
-        // Change "as Int" according to the data type
-        // Example "as String" or write nothing
-        // Logging the data is optional
+        val scrollView = findViewById<ScrollView>(R.id.scroll)
         val msgContainer = findViewById<LinearLayout>(R.id.msgCont)
+        val backgroundDrawable = resources.getDrawable(R.drawable.backgroundradious)
+
+        fun addToView(msgData: JSONObject){
+            val tv = TextView(this)
+            tv.setTextColor(Color.parseColor("#FFFFFF"))
+            tv.background = backgroundDrawable
+            tv.setPadding(35,20,35,20)
+            val layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            layoutParams.setMargins(10, 20, 10, 20)
+            tv.layoutParams = layoutParams
+            tv.text = msgData.getString("message")
+            msgContainer.addView(tv)
+            scrollView.post {
+                scrollView.fullScroll(ScrollView.FOCUS_DOWN)
+            }
+        }
+
         mSocket.on("getMessages") { args ->
             if (args[0] != null) {
                 val msgsJSONArray = args[0] as JSONArray
                 runOnUiThread {
                     for(i in 0 until msgsJSONArray.length()){
-                        val tv = TextView(this)
-                        tv.setTextColor(Color.parseColor("#FFFFFF"))
-                        val backgroundDrawable = resources.getDrawable(R.drawable.backgroundradious)
-                        tv.background = backgroundDrawable
-                        tv.setPadding(35,20,35,20)
-                        val layoutParams = LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.WRAP_CONTENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT
-                        )
-                        layoutParams.setMargins(10, 20, 10, 20)
-                        tv.layoutParams = layoutParams
-                        tv.text = msgsJSONArray.getJSONObject(i).getString("message")
-                        msgContainer.addView(tv)
+                        addToView(msgsJSONArray.getJSONObject(i))
                     }
                 }
             }
         }
+        mSocket.on("chat:message") {args ->
+            if (args[0] != null){
+                runOnUiThread {
+                    val msgsJSONObj = args[0] as JSONObject
+                    addToView(msgsJSONObj)
+                }
+            }
+        }
+
         btnSnd.setOnClickListener{
             val msgData = JSONObject()
             msgData.put("message", inputMsg.text)
             msgData.put("user", username)
             msgData.put("folder", "main")
-            Toast.makeText(this,msgData.toString(), Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this,msgData.toString(), Toast.LENGTH_SHORT).show()
             mSocket.emit("chat:message", msgData)
+            inputMsg.text = null
         }
     }
 }
