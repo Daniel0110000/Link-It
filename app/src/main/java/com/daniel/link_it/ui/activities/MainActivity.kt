@@ -4,7 +4,9 @@ import android.content.Context
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Layout
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -58,6 +60,8 @@ class MainActivity : AppCompatActivity() {
         val mSocket = SocketHandler.getSocket()
         val inputMsg = findViewById<EditText>(R.id.inputMsg)
         val btnSnd = findViewById<Button>(R.id.btnSnd)
+        val btnMenu = findViewById<Button>(R.id.btnMenu)
+        val overlay = findViewById<LinearLayout>(R.id.overlay)
 
         Toast.makeText(this,username, Toast.LENGTH_SHORT).show()
         val userData = JSONObject()
@@ -86,6 +90,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        val profileLbl = findViewById<TextView>(R.id.profileUser)
+        profileLbl.text = username
         mSocket.on("getMessages") { args ->
             if (args[0] != null) {
                 val msgsJSONArray = args[0] as JSONArray
@@ -113,6 +119,16 @@ class MainActivity : AppCompatActivity() {
             //Toast.makeText(this,msgData.toString(), Toast.LENGTH_SHORT).show()
             mSocket.emit("chat:message", msgData)
             inputMsg.text = null
+        }
+        btnMenu.setOnClickListener{
+            val menuLayout = findViewById<LinearLayout>(R.id.menu_layout)
+            menuLayout.visibility = View.VISIBLE
+            overlay.visibility = View.VISIBLE
+        }
+        overlay.setOnClickListener{
+            val menuLayout = findViewById<LinearLayout>(R.id.menu_layout)
+            menuLayout.visibility = View.INVISIBLE
+            overlay.visibility = View.INVISIBLE
         }
     }
 }

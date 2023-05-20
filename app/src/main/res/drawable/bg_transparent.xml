@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/darkerBg" />
+    <corners android:radius="0dp" />
+    <alpha android:alpha="1" /> <!-- Ajusta el valor de transparencia según tus necesidades -->
+</shape>
