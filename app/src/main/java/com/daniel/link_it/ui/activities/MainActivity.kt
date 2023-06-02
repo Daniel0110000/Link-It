@@ -52,7 +52,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         val sharedPref = getSharedPreferences("linkitPrefs", Context.MODE_PRIVATE)
         val username = sharedPref.getString("username", null)
         SocketHandler.setSocket()
@@ -62,8 +61,9 @@ class MainActivity : AppCompatActivity() {
         val btnSnd = findViewById<Button>(R.id.btnSnd)
         val btnMenu = findViewById<Button>(R.id.btnMenu)
         val overlay = findViewById<LinearLayout>(R.id.overlay)
+        val folderCont = findViewById<LinearLayout>(R.id.folderCont)
+        var currentFolder = "main"
 
-        Toast.makeText(this,username, Toast.LENGTH_SHORT).show()
         val userData = JSONObject()
         userData.put("user", username)
         mSocket.emit("getUser",userData)
@@ -102,6 +102,16 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        mSocket.on("getMessagesFol") { args ->
+            if (args[0] != null) {
+                val msgsJSONArray = args[0] as JSONArray
+                runOnUiThread {
+                    for(i in 0 until msgsJSONArray.length()){
+                        addToView(msgsJSONArray.getJSONObject(i))
+                    }
+                }
+            }
+        }
         mSocket.on("chat:message") {args ->
             if (args[0] != null){
                 runOnUiThread {
@@ -110,13 +120,38 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        mSocket.on("getFolders") { args ->
+            if(args[0]!= null){
+                runOnUiThread{
+                    val foldersArr = args[0] as JSONArray
+                    for(i in 0 until foldersArr.length()){
+                        val folder = Button(this)
+                        folder.id = View.generateViewId()
+                        folder.text = foldersArr.getJSONObject(i).getString("folder")
+                        folder.setOnClickListener{
+
+                            currentFolder = folder.text.toString()
+                            val menuLayout = findViewById<LinearLayout>(R.id.menu_layout)
+                            menuLayout.visibility = View.INVISIBLE
+                            overlay.visibility = View.INVISIBLE
+                            val changeData = JSONObject()
+                            changeData.put("folder", folder.text)
+                            changeData.put("user", username?.trim())
+                            msgContainer.removeAllViews()
+                            mSocket.emit("changedFolder",changeData)
+
+                        }
+                        folderCont.addView(folder)
+                    }
+                }
+            }
+        }
 
         btnSnd.setOnClickListener{
             val msgData = JSONObject()
             msgData.put("message", inputMsg.text)
             msgData.put("user", username)
-            msgData.put("folder", "main")
-            //Toast.makeText(this,msgData.toString(), Toast.LENGTH_SHORT).show()
+            msgData.put("folder", currentFolder)
             mSocket.emit("chat:message", msgData)
             inputMsg.text = null
         }
@@ -130,5 +165,6 @@ class MainActivity : AppCompatActivity() {
             menuLayout.visibility = View.INVISIBLE
             overlay.visibility = View.INVISIBLE
         }
+
     }
 }

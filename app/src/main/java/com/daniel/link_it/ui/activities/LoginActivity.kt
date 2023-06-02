@@ -54,7 +54,7 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
-        Toast.makeText(this,hasSesion.toString(), Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this,hasSesion.toString(), Toast.LENGTH_SHORT).show()
         val btnLogin = findViewById<Button>(R.id.btnLogin)
         btnLogin.setOnClickListener{
 

@@ -70,6 +70,7 @@
             android:layout_height="288dp">
 
             <LinearLayout
+                android:id="@+id/folderCont"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical" />
